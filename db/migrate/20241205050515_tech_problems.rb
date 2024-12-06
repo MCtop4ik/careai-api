@@ -1,4 +1,4 @@
-class TechProblems < ActiveRecord::Migration[6.1]
+class CreateTechProblems < ActiveRecord::Migration[6.1]
   def change
     create_table :tech_problems do |t|
       t.string :userid
