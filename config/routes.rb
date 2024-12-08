@@ -9,5 +9,15 @@ Rails.application.routes.draw do
   post "/send-message", to: "chat#send_message"
   get "/messages", to: "chat#chat_messages"
 
-  get "all_diets", to: "diet_manager#all_diets"
+  get "/all_diets", to: "diet_manager#all_diets"
+
+  put "/change-user", to: "authentication#change_user_data"
+  put "/approve-diet", to: "diet_manager#approve_diet"
+  put "/disapprove-diet", to: "diet_manager#disapprove_diet"
+
+  get "user-diets", to: "diet_manager#user_diets"
+  post 'giga-chat/chat-completion', to: 'giga_chat#chat_completion'
+  get 'execute_python_script', to: 'mivolo_recogniser#execute_python_script'
+  get 'mivolo', to: 'mivolo_recogniser#mivolo_recognise'
+
 end

@@ -11,7 +11,7 @@ class AuthenticationController < ApplicationController
       p user
       payload = { user_id: user.id, email: user.email,
        first_name: user.first_name, date_of_birth: user.date_of_birth, 
-       second_name: user.second_name, phone: user.phone,
+       second_name: user.second_name, phone: user.phone, user_role: user.user_role,
        exp: Time.now.to_i + 60 * 60 }
       p payload
       token = JWT.encode(payload, Rails.application.secret_key_base, 'HS256')
@@ -28,6 +28,7 @@ class AuthenticationController < ApplicationController
     confirm_password = params[:confirmPassword]
     date_of_birth = params[:dateOfBirth]
     first_name = params[:firstName]
+    user_role = params[:userRole]
 
     if password != confirm_password
       render json: { error: "Passwords do not match" }, status: :unprocessable_entity
@@ -38,7 +39,8 @@ class AuthenticationController < ApplicationController
       email: email,
       password: password,
       date_of_birth: date_of_birth,
-      first_name: first_name
+      first_name: first_name,
+      user_role: user_role
     )
 
     if user.persisted?
@@ -49,13 +51,18 @@ class AuthenticationController < ApplicationController
   end
 
   def change_user_data
-    decoded_token = JWT.decode(params[:token], Rails.application.secret_key_base, true, { algorithm: 'HS256' })
-    email = decoded_token[0]['email']
-
-    user = User.find(email=email)
-    user.update(user_id: user.id, email: user.email,
-       first_name: user.first_name, date_of_birth: user.date_of_birth, 
-       second_name: user.second_name, phone: user.phone)
+    p User.all
+    email = params[:email]
+    firstName = params[:firstName]
+    secondName = params[:lastName]
+    phoneNumber = params[:phoneNumber]
+    dateBirth = params[:birthDate]
+    p email
+    user = User.find_by(email: email)
+    p user
+    user.update(first_name: firstName, date_of_birth: dateBirth, 
+       second_name: secondName, phone: phoneNumber)
+    render status: 200, json: user.to_json
   end
 
   def ping
