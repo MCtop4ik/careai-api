@@ -71,7 +71,7 @@ class AuthenticationController < ApplicationController
 
   def grant
     userid = params[:userid]
-    user = User.find_by(userid: userid)
+    user = User.find_by(id: userid)
     user.update(user_role: 'doctor')
     render status: 200, json: 'You became doctor. Congratulations!'
   end

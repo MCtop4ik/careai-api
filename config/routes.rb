@@ -19,5 +19,5 @@ Rails.application.routes.draw do
   post 'giga-chat/chat-completion', to: 'giga_chat#chat_completion'
   get 'execute_python_script', to: 'mivolo_recogniser#execute_python_script'
   get 'mivolo', to: 'mivolo_recogniser#mivolo_recognise'
-
+  post 'grant', to: "authentication#grant"
 end
