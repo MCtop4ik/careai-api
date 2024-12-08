@@ -68,4 +68,11 @@ class AuthenticationController < ApplicationController
   def ping
     render status: 200, json: 'Pong!'.to_json
   end 
+
+  def grant
+    userid = params[:userid]
+    user = User.find_by(userid: userid)
+    user.update(user_role: 'doctor')
+    render status: 200, json: 'You became doctor. Congratulations!'
+  end
 end
